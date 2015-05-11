@@ -78,8 +78,9 @@ CanvasDraw.prototype = {
 	},
 
 	drawLine: function(fromx, fromy, tox, toy){
-		context.fillStyle = "black"
 		context.beginPath();
+		context.lineWidth = 2;
+		context.fillStyle = "black";
  		context.moveTo(fromx,fromy);
  		context.lineTo(tox, toy);
  		context.stroke();
@@ -138,10 +139,12 @@ MainApp.prototype = {
 		var x = event.x;
 		var y = event.y;
 		var canvas = document.getElementById("canvas");
-
 		x -= canvas.offsetLeft;
 		y -= canvas.offsetTop;
 		this.toggleMatrixAtPos(coordsToDotMatrix(x, y));
 		this.draw();
-		}
+		},
+	getMatrix: function() {
+		return this.matrix;
+	}
 };
