@@ -45,7 +45,7 @@ function coordsToDotMatrix(x, y){
 		offset = 10;
 	} else if (x <= 425 && x >= 375) {
 		offset = 15;
-	} else {
+	} else if (x <= 525 && x >= 475){
 		offset = 20;
 	}
 	if (y <= 74 && y >= 30 ) {
