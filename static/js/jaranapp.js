@@ -67,7 +67,9 @@ var CanvasDraw = function(controller){
 	context = canvas.getContext("2d");
 	canvas_height = canvas.height;
 	canvas_width = canvas.width;
-	canvas.addEventListener("mousedown", controller.getPos, false);
+	canvas.addEventListener("mousedown", function(){
+		controller.getPos(event);
+	}, false);
 }
 
 CanvasDraw.prototype = {
@@ -76,8 +78,9 @@ CanvasDraw.prototype = {
 	},
 
 	drawLine: function(fromx, fromy, tox, toy){
-		context.fillStyle = "black"
 		context.beginPath();
+		context.lineWidth = 2;
+		context.fillStyle = "black";
  		context.moveTo(fromx,fromy);
  		context.lineTo(tox, toy);
  		context.stroke();
@@ -116,38 +119,32 @@ var MainApp = function() {
 	// 5- 9 Second, and so on!
 	this.canvasScreen = new CanvasDraw(this);
 	this.matrix = new Array(25);
-	//Test code below
-	for (var i;i<25;i++){
-		this.matrix[i] = true;
-	}
-	//test code ends here!
 };
 
 MainApp.prototype = {
-	getPos: function(event) {
-		var x = event.x;
-		var y = event.y;
+	toggleMatrixAtPos: function(pos) {
+		this.matrix[pos] = !this.matrix[pos];
+	},
 
-		var canvas = document.getElementById("canvas");
-
-		x -= canvas.offsetLeft;
-		y -= canvas.offsetTop;
-
-		//toggleMatrixAtPos(0);
-		alert("Matrix index: " + coordsToDotMatrix(x, y));
-
-		},
 	draw: function(){
 		this.canvasScreen.clear();
 		this.canvasScreen.drawEmpty();
 		for (var i=0;i<25;i++){
-			if (this.matrix[i] = true)
+			if (this.matrix[i] == true)
 				this.canvasScreen.drawDot(matrixDotToCoords(i));
 		}
 	},
 
-	toggleMatrixAtPos: function(pos) {
-		this.matrix[pos] = ~this.matrix[pos];
-	},
-
+	getPos: function(event) {
+		var x = event.x;
+		var y = event.y;
+		var canvas = document.getElementById("canvas");
+		x -= canvas.offsetLeft;
+		y -= canvas.offsetTop;
+		this.toggleMatrixAtPos(coordsToDotMatrix(x, y));
+		this.draw();
+		},
+	getMatrix: function() {
+		return this.matrix;
+	}
 };
