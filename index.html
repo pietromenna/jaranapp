@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Jaranapp - Profiler</title>
+    <script src="js/jaranapp.js" ></script>
+    <script> window.onload = function(){
+        var app = new MainApp();
+        app.draw();
+    } </script>
 </head>
 <body>
     <h1>Name a chord</h1>
@@ -44,6 +49,10 @@
     </select>
     <br />
     <br />
+
+    <canvas id="canvas" width="600" height="300" style="border:1px solid #000000;">
+    Acorde de Jarana
+    </canvas>
 
     <button id="save" onclick="saveChord()">Save it</button>
 
